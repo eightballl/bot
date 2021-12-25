@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Eightbot</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header">
+      <div class="container">
+        <h1><a href="index.html">Eightbot</a></h1>
+        <h2>Kami siap membantu anda dengan <span>Sistem Bot</span> kami.</h2>
+
+        <!-- .navbar -->
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link active" href="#header">Home</a></li>
+            <li><a class="nav-link" href="#portfolio">Bot Tulis</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Bot Nulis ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="section-title">
+          <h2>BOT</h2>
+          <p>Tulis Tangan</p>
+        </div>
+        <div class="bot">
+          <div class="tulis">
+            <center>
+              <textarea id="buku" rows="5" cols="35" placeholder="Tulis disini..."></textarea>
+            </center>
+            <center>
+              <button class="btn btn-success mt-2" id="button" onclick="botnulis()" type="submit">GAS</button>
+              <button class="btn btn-danger mt-2" id="reset" onclick="document.location.reload(true)" type="reset">Kembali</button>
+            </center>
+          </div>
+          <script>
+            function reloadpage() {
+              location.reload();
+            }
+
+            function botnulis() {
+              var xhr = new XMLHttpRequest();
+              var tulisan = encodeURIComponent(document.getElementById("buku").value);
+              var url = "https://tools.zone-xsec.com/api/nulis.php?q=" + tulisan;
+              xhr.onloadstart = function () {
+                document.getElementById("button").innerHTML = "Tunggu...";
+              };
+              xhr.onerror = function () {
+                alert("Gagal Terhubung Ke Api");
+              };
+              xhr.onloadend = function () {
+                if (this.responseText !== "") {
+                  var data = JSON.parse(this.responseText);
+                  var img = document.createElement("img");
+                  img.setAttribute("width", "304");
+                  img.src = data.image;
+                  var name = document.createElement("h3");
+                  name.innerHTML = data.status;
+                  if (data.status == "Error") {
+                    alert("Harap masukan input dengan benar!");
+                  } else {
+                    document.getElementById("xsec").append(img);
+
+                    setTimeout(function () {
+                      document.getElementById("button").innerHTML = "Buat Lagi";
+                    }, 100);
+                  }
+                }
+              };
+              xhr.open("GET", url, true);
+              xhr.send();
+            }
+
+            function clearResult() {
+              document.getElementById("xsec").innerHTML = "";
+            }
+          </script>
+          <div class="hasil mt-5">
+            <div class="hasil2">
+              <div class="section-title">
+                <h2>HASIL</h2>
+              </div>
+              <div class="tile-body" id="xsec"></div>
+            </div>
+          </div>
+          <div id="coba"></div>
+        </div>
+      </div>
+    </section>
+    <!-- End Bot Tulis -->
+
+    <div class="credits">Designed by <a href="">Eightbot</a></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
